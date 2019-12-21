@@ -17,3 +17,25 @@ time.struct_time(tm_year=2019, tm_mon=12, tm_mday=21, tm_hour=18, tm_min=30, tm_
 >>> t3=time.strptime('2017-07-25 14:44:59',"%Y-%m-%d %H:%M:%S")
 >>> t3
 time.struct_time(tm_year=2017, tm_mon=7, tm_mday=25, tm_hour=14, tm_min=44, tm_sec=59, tm_wday=1, tm_yday=206, tm_isdst=-1)
+
+import time
+import datetime
+#  首先将时间字符串处理成标准的，即将小数位去掉
+time_stamp = "2019-04-10 00:30:10.198" .split('.')[0]
+
+#  将字符串转化为时间戳
+h =  time.mktime(time.strptime(time_stamp, "%Y-%m-%d %H:%M:%S"))
+
+#  将时间戳转换为字符串
+start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(h-30))
+end_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(h+30))
+
+#  将时间字符串转化为datetime类型
+start_date = datetime.datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+
+#  将时间戳转化为datetime类型
+t = datetime.datetime.fromtimestamp(h)
+print(t,type(t))
+
+
+print(start_date,type(start_date))
