@@ -1,0 +1,33 @@
+import subprocess
+import psutil
+import time
+
+def get_node_process():
+    cmd="ps -ef|grep node|grep -v grep|awk '{print $2}'"
+    child=subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+    out=child.stdout.readlines()
+    for i in out:
+        node_pid=i.decode('utf-8').strip()
+        p=psutil.Process(int(node_pid))
+        node_user=p.username()
+        node_dir=p.cwd()
+        node_time=time.strftime("%Y%m%d",time.localtime(p.create_time()))
+        print("用户:"+node_user+"工作目录:"+node_dir+"启动时间:"+node_time)
+        
+get_node_process()
+wadeson@wadeson-Inspiron-7460:~/python_projects$ sudo python3 get_ip.py 
+用户:wadeson工作目录:/home/wadeson/vmware/node1启动时间:20191207
+用户:wadeson工作目录:/home/wadeson/vmware/node2启动时间:20191207
+用户:wadeson工作目录:/home/wadeson/vmware/node3启动时间:20191208
+
+wadeson@wadeson-Inspiron-7460:~/python_projects$ cat get_ip.py 
+def get_ip():
+    import subprocess
+    cmd="ip a|grep -Po '(?<=inet).*(?=brd)'|egrep -v '1/'|grep -Po '.*(?=/)'"
+    child=subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+    out,err=child.communicate()
+    ip=out.decode('utf-8').strip()
+    return ip
+    
+ip=get_ip()
+print(ip)
