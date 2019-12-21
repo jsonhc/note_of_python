@@ -13,3 +13,7 @@ time.struct_time(tm_year=2019, tm_mon=12, tm_mday=21, tm_hour=18, tm_min=30, tm_
 time.struct_time(tm_year=2019, tm_mon=12, tm_mday=21, tm_hour=18, tm_min=30, tm_sec=28, tm_wday=5, tm_yday=355, tm_isdst=0)
 >>> time.mktime(t2)
 1576924228.0
+
+>>> t3=time.strptime('2017-07-25 14:44:59',"%Y-%m-%d %H:%M:%S")
+>>> t3
+time.struct_time(tm_year=2017, tm_mon=7, tm_mday=25, tm_hour=14, tm_min=44, tm_sec=59, tm_wday=1, tm_yday=206, tm_isdst=-1)
