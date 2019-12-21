@@ -1,0 +1,13 @@
+def get_ip():
+    import subprocess
+    cmd="ip a|grep -Po '(?<=inet).*(?=brd)'|egrep -v '1/'|grep -Po '.*(?=/)'"
+    child=subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+    out,err=child.communicate()
+    ip=out.decode('utf-8').strip()
+    return ip
+    
+ip=get_ip()
+print(ip)
+wadeson@wadeson-Inspiron-7460:~/python_projects$ python3 get_ip.py 
+192.168.1.106
+
