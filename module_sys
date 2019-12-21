@@ -1,0 +1,41 @@
+python脚本传递参数
+import sys
+
+print(sys.argv[0])          #sys.argv[0] 类似于shell中的$0,但不是脚本名称，而是脚本的路径   
+print(sys.argv[1])          #sys.argv[1] 表示传入的第一个参数，既 hello
+
+import sys
+
+name=sys.argv[1]
+def get_argv(name):
+    user=name
+    return user
+
+own=get_argv(name)
+print(own)
+
+wadeson@wadeson-Inspiron-7460:~/python_projects$ python3 get_ip.py node1
+node1
+
+抛异常:
+wadeson@wadeson-Inspiron-7460:~/python_projects$ python3 get_ip.py 
+Traceback (most recent call last):
+  File "get_ip.py", line 33, in <module>
+    name=sys.argv[1]
+IndexError: list index out of range
+解决抛异常:
+import sys
+
+def get_argv(name):
+    user=name
+    return user
+
+try:
+    name=sys.argv[1]
+    own=get_argv(name)
+    print(own)
+except IndexError:
+    print("please input parameter")
+    
+wadeson@wadeson-Inspiron-7460:~/python_projects$ python3 get_ip.py 
+please input parameter
