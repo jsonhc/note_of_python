@@ -1,0 +1,15 @@
+import time
+>>> import time
+>>> t=time.time()       # t为时间戳时间
+>>> print(t)
+1576924228.1756716
+>>> t1=time.strftime("%Y%m%d",time.localtime(t))     # 格式化字符串时间
+>>> print(t1)
+20191221
+>>> time.localtime(t)
+time.struct_time(tm_year=2019, tm_mon=12, tm_mday=21, tm_hour=18, tm_min=30, tm_sec=28, tm_wday=5, tm_yday=355, tm_isdst=0)
+>>> t2=time.localtime(t)
+>>> t2
+time.struct_time(tm_year=2019, tm_mon=12, tm_mday=21, tm_hour=18, tm_min=30, tm_sec=28, tm_wday=5, tm_yday=355, tm_isdst=0)
+>>> time.mktime(t2)
+1576924228.0
