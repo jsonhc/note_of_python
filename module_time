@@ -39,3 +39,11 @@ print(t,type(t))
 
 
 print(start_date,type(start_date))
+
+t="Sat Dec  7 22:42:09 2019"
+t=time.strptime("Sat Dec  7 22:42:09 2019","%a %b %d %H:%M:%S %Y")
+>>> t
+time.struct_time(tm_year=2019, tm_mon=12, tm_mday=7, tm_hour=22, tm_min=42, tm_sec=9, tm_wday=5, tm_yday=341, tm_isdst=-1)
+>>> t1=time.strftime("%Y%m%d",t)
+>>> t1
+'20191207'
