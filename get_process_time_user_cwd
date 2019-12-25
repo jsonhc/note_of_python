@@ -1,0 +1,24 @@
+import subprocess
+import time
+
+cmd="ps -ef|grep node|grep -v grep"
+child=subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+out=child.stdout.readlines()
+
+for i in out:
+    j = i.decode('utf-8').strip()
+    user=j.split()[0]
+    node_dir=j.split()[-1]
+    cmd="ps -eo lstart,cmd|grep "+node_dir+"|grep -v grep|awk '{print $1,$2,$3,$4,$5}'"
+    process_time=subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+    out,err=process_time.communicate()
+    t=out.decode('utf-8').strip()
+    t1=time.strptime("Sat Dec  7 22:42:09 2019","%a %b %d %H:%M:%S %Y")
+    t2=time.strftime("%Y%m%d",t1)
+    print(user,t2,node_dir)
+
+
+wadeson@wadeson-Inspiron-7460:~/python_projects$ python3 1.py 
+wadeson 20191207 /home/wadeson/vmware/node1/node1.vmx
+wadeson 20191207 /home/wadeson/vmware/node2/node2.vmx
+wadeson 20191207 /home/wadeson/vmware/node3/node3.vmx
