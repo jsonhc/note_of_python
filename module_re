@@ -1,0 +1,9 @@
+import re
+
+with open("file1", 'r') as f:
+    strbefore = f.read()
+
+restr = ".*please check"               # 正则表达式匹配
+regex = re.compile(restr, re.IGNORECASE)    # re.IGNORECASE:忽略大小写
+mylist = regex.findall(strbefore)
+print mylist
