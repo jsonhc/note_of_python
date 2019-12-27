@@ -1,0 +1,13 @@
+with open("file1", 'r') as f:
+    print f.read()          # read():将文件内容全部读取出来,f.read()类型为str
+    
+with open("file1", 'r') as f:
+    print f.readlines()
+    print type(f.readlines())        # readlines():将文件内容读取为list类型,每行并进行换行
+    for i in f.readlines():
+        print i.strip()        # 打印文件每一行内容
+        
+with open("file1", 'r') as f:
+    print f.readline()
+    print type(f.readline())        # readline():打印文件内容的第一行,类型为str
+    
