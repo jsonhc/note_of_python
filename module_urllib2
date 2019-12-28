@@ -41,10 +41,28 @@ def get_zhiboba_by_useragent():
     header = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"}
     request = urllib2.Request(url, headers=header)    # 发起请求
     request.add_header("Connection", "keep-alive")    # 增加headers
-    response = urllib2.urlopen(request)           # 获取源码
+    response = urllib2.urlopen(request)           # 打开请求,获取响应
     data = response.read()    # 打开请求,获取网站数据
     print response.code          # 打印状态码
     return data
 
 
 print(get_zhiboba_by_useragent())
+
+进行get方法进行获取网站源码:
+# encoding:utf-8
+import urllib
+import urllib2
+
+
+url = "http://baidu.com"
+word = {"wd": "python"}
+newurl = url + "?" + str(word)
+print newurl
+newurl = url + "?" + urllib.urlencode(word)  # 进行编码成字符串
+print newurl
+
+request = urllib2.Request(newurl)
+response = urllib2.urlopen(request)
+data = response.read()
+print response.code
