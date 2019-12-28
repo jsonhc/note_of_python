@@ -55,7 +55,7 @@ import urllib
 import urllib2
 
 
-url = "http://baidu.com"
+url = "http://baidu.com/s"
 word = {"wd": "python"}
 newurl = url + "?" + str(word)
 print newurl
@@ -66,3 +66,24 @@ request = urllib2.Request(newurl)
 response = urllib2.urlopen(request)
 data = response.read()
 print response.code
+
+当查找的关键字有中文汉子时,需要进行如下处理: word = {"wd": u"上海".encode('utf-8')}
+# coding:utf-8
+import urllib
+import urllib2
+
+
+url = "http://baidu.com/s"
+word = {"wd": u"上海".encode('utf-8')}
+newurl = url + "?" + str(word)
+print newurl
+newurl = url + "?" + urllib.urlencode(word)  # 进行编码成字符串
+print newurl
+request = urllib2.Request(newurl)
+response = urllib2.urlopen(request)
+data = response.read()
+print response.code
+打印如下:
+http://baidu.com/s?{'wd': '\xc9\xcf\xba\xa3'}
+http://baidu.com/s?wd=%C9%CF%BA%A3
+200
