@@ -162,3 +162,10 @@ request = urllib2.Request("http://www.baidu.com")     # 创建一个请求
 response = opener.open(request)    # 使用打开器进行处理请求
 print response.code
 print response.read()
+
+下载图片:
+import urllib
+
+urllib.urlretrieve("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1577539766&di=307c3daf92780f937c1924af2f4d6be5&src=http://img8.zol.com.cn/bbs/upload/22089/22088280.jpg", "shanghai.jpg")
+上面url链接就是图片链接地址
+
