@@ -148,3 +148,17 @@ def geturlbyandroid(url):
 
 
 geturlbyandroid("http://www.baidu.com")
+
+
+使用代理服务器进行访问:
+# coding:utf-8
+import urllib2
+import urllib
+
+
+httpproxy = urllib2.ProxyHandler({"http": "120.77.32.254:8000"})    # 创建并配置代理,无需密码,可以在kuaidaili.com进行实验,或者自己架设代理服务器
+opener = urllib2.build_opener(httpproxy)   # 创建一个打开器
+request = urllib2.Request("http://www.baidu.com")     # 创建一个请求
+response = opener.open(request)    # 使用打开器进行处理请求
+print response.code
+print response.read()
