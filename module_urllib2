@@ -156,7 +156,7 @@ import urllib2
 import urllib
 
 
-httpproxy = urllib2.ProxyHandler({"http": "120.77.32.254:8000"})    # 创建并配置代理,无需密码,可以在kuaidaili.com进行实验,或者自己架设代理服务器
+httpproxy = urllib2.ProxyHandler({"http": "120.77.32.254:8000"})    # 创建并配置代理,无需密码,可以在kuaidaili.com进行实验,或者自己架设代理服务器,如代理服务器需要账号密码:urllib2.ProxyHandler({"http": "wadeson:123456@120.77.32.254:8000"})
 opener = urllib2.build_opener(httpproxy)   # 创建一个打开器
 request = urllib2.Request("http://www.baidu.com")     # 创建一个请求
 response = opener.open(request)    # 使用打开器进行处理请求
