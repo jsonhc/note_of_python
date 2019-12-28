@@ -87,3 +87,26 @@ print response.code
 http://baidu.com/s?{'wd': '\xc9\xcf\xba\xa3'}
 http://baidu.com/s?wd=%C9%CF%BA%A3
 200
+
+
+结合起来使用:
+# coding:utf-8
+import urllib2
+import urllib
+
+
+def geturl(addr, mytype):
+    url = "https://sou.zhaopin.com/?"
+    word = {"jl": addr, "kw": mytype}
+    word = urllib.urlencode(word)
+    newurl = url+word
+    print newurl
+    header = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"}
+    request = urllib2.Request(newurl, headers=header)
+    response = urllib2.urlopen(request)
+    print response.read()
+
+
+addr = u"上海".encode('utf-8')
+mytype = "python"
+print geturl(addr, mytype)
