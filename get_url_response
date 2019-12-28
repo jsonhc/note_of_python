@@ -1,0 +1,57 @@
+各种方式请求并获取url的response:
+# encoding:utf-8
+import urllib
+import urllib2
+
+
+def getbyurlopen(url):
+    response = urllib2.urlopen(url)
+    return response.info()
+
+
+def getbyrequest(url):
+    request = urllib2.Request(url)
+    response = urllib2.urlopen(request)
+    return response.info()
+
+
+def getbyopener(url):
+    opener = urllib2.build_opener()
+    # response = opener.open(url)
+    request = urllib2.Request(url)
+    response = opener.open(request)
+    return response.info()
+
+
+url = "http://baidu.com"
+print getbyopener(url)
+print getbyurlopen(url)
+print getbyrequest(url)
+
+
+各种方式添加headers:
+# encoding:utf-8
+import urllib
+import urllib2
+
+
+def addheaderbyrequest(url):
+    header = {"Android QQ": "User-Agent: Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; BLA-AL00 Build/HUAWEIBLA-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.9 Mobile Safari/537.36"}
+    request = urllib2.Request(url, headers=header)
+    request.add_header("Connection", "keep-alive")
+    response = urllib2.urlopen(request)
+    return response.info()
+
+
+def addheaderbyopener(url):
+    opener = urllib2.build_opener()
+    headers = ("User-Agent", "Mozilla/5.0 (Windows NT 10.0;WOW64) AppleWebKit/537.36 (KHTML,like Gecko) Chrome/63.0.3239.132 Safari/537.36")
+    opener.addheaders = [headers]
+    urllib2.install_opener(opener)
+    response = opener.open(url)
+    return response.info()
+
+
+url = "http://baidu.com"
+print addheaderbyopener(url)
+print addheaderbyrequest(url)
