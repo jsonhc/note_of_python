@@ -110,3 +110,18 @@ def geturl(addr, mytype):
 addr = u"上海".encode('utf-8')
 mytype = "python"
 print geturl(addr, mytype)
+
+
+POST方法提交数据,post方式比get方法安全,get提交的数据都是可以看见的,post提交的可以使一部分看不见,例如登录密码
+# coding:utf-8
+import urllib2
+import urllib
+
+
+url = "https://umbra.nascom.nasa.gov/cgi-bin/eit-catalog.cgi"
+values = {"date": "2011"}
+data = urllib.urlencode(values)
+request = urllib2.Request(url, data)    # 发起请求并传入data
+# request.add_data(data)
+response = urllib2.urlopen(request)
+print response.read()
