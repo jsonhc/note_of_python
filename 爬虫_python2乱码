@@ -1,0 +1,26 @@
+首先确认网站的编码和本地的编码是不是一致的:
+获取网站的编码:
+# encoding:utf-8
+import urllib
+import urllib2
+import re
+
+
+url = "https://jobs.51job.com/shanghai-pdxq/119360868.html?s=01&t=6"
+header = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"}
+request = urllib2.Request(url, headers=header)  # 发起请求
+request.add_header("Connection", "keep-alive")
+response = urllib2.urlopen(request)
+data = response.read()
+restr = """<meta http-equiv="Content-Type" content="text/html; charset=(\D+)">"""
+regex = re.compile(restr, re.IGNORECASE)
+mylist = regex.findall(data)
+print mylist[0]                   # 这里匹配的就是网站页面的编码,这里显示的是gbk
+print data.decode('GBK').encode('utf-8')     # 由于网站编码是gbk,而本地编码是utf-8,所以需要将获取的data先进行gbk解码,然后编码为utf-8
+
+
+url = "http://baidu.com/s"
+word = {"wd": u"上海".encode('utf-8')}
+newurl = url + "?" + str(word)
+print newurl
+newurl = url + "?" + urllib.urlencode(word)  # 进行编码成字符串
