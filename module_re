@@ -7,3 +7,50 @@ restr = ".*please check"               # 正则表达式匹配
 regex = re.compile(restr, re.IGNORECASE)    # re.IGNORECASE:忽略大小写
 mylist = regex.findall(strbefore)
 print mylist
+
+匹配字符串或者字母:\D,\S
+data = response.read()
+# restr = """<meta http-equiv="Content-Type" content="text/html; charset=([\s\S]*?)">"""
+restr = """<meta http-equiv="Content-Type" content="text/html; charset=(\S+)">"""
+regex = re.compile(restr, re.IGNORECASE)
+mylist = regex.findall(data)
+
+匹配所有:
+html = data.decode('GBK').encode('utf-8')
+restr = """<div class="bmsg job_msg inbox">([\s\S]*?)</div>"""
+regex = re.compile(restr, re.IGNORECASE)
+mysite = regex.findall(data)
+
+匹配中文:
+# encoding:utf-8
+import urllib
+import urllib2
+import re
+
+
+url = "https://jobs.51job.com/shanghai-pdxq/119360868.html?s=01&t=6"
+header = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"}
+request = urllib2.Request(url, headers=header)  # 发起请求
+request.add_header("Connection", "keep-alive")
+response = urllib2.urlopen(request)
+data = response.read()
+# restr = """<meta http-equiv="Content-Type" content="text/html; charset=([\s\S]*?)">"""
+restr = """<meta http-equiv="Content-Type" content="text/html; charset=(\S+)">"""
+regex = re.compile(restr, re.IGNORECASE)
+mycharset = regex.findall(data)
+print mycharset
+
+html = data.decode('GBK').encode('utf-8')
+
+restr = """<div class="bmsg job_msg inbox">([\s\S]*?)<div class="mt10">"""
+regex = re.compile(restr, re.IGNORECASE)
+mysite = regex.findall(data)
+# print mysite[0].strip()
+result = mysite[0].strip().replace("<p>", "").replace("</p>", "").replace("<span>", "").replace("</span>", "")
+print result.decode('GBK').encode('utf-8').replace('<div class="mt10">', "")
+
+/usr/bin/python /home/wadeson/PycharmProjects/note_of_python2/爬虫_gangwei.py
+['gbk']
+岗位职责：    1.负责爬虫系统的设计与开发，监控与维护。    2.负责研究、优化爬虫算法，提升爬虫系统的稳定性、可扩展性；    3.负责设计爬虫策略和防屏蔽规则，提升效率和质量；    4.能独立解决实际过程中遇到的各种问题；    5.负责日常的数据采集工作，积极响应业务需求。        任职要求：    1.计算机相关专业，本科以上学历；    2.具有1年以上爬虫工作经验，需要有实际的网站数据爬取案例；    3.熟练掌握Python、C#、JavaScript语言，熟悉Scrapy、PySpider等爬虫框架；    4.熟练掌握SQL Server数据库的应用；    5.具有Linux操作系统、MongoDB等文本数据库使用经验者优先。
+
+Process finished with exit code 0
