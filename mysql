@@ -1,0 +1,38 @@
+import pymysql
+
+class Dbops:
+    def __init__(self, host, username, password, dbname):
+        self.host = host
+        self.username = username
+        self.password = password
+        self.dbname = dbname
+        try:
+            self.conn = pymysql.connect(self.host, self.username, self.password, self.dbname)
+            self.cursor = self.conn.cursor()
+        except Exception as E:
+            print(E)
+    def create_table(self, sql):
+        try:
+            self.cursor.execute(sql)
+            print("表创建成功")
+        except Exception as E:
+            print(E)
+    def query_table(self, sql):
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        return result
+    def query_fields(self):
+        fields = self.cursor.description
+        return fields
+    def insert_update_table(self, sql):
+        self.cursor.execute(sql)
+        self.conn.commit()
+    def delete_table(self, sql):
+        try:
+            self.cursor.execute(sql)
+            print("删除表成功")
+            self.conn.commit()
+        except Exception as E:
+            print(E)
+    def db_close(self):
+        self.conn.close()
