@@ -1,0 +1,16 @@
+import dbops
+import xlrd
+
+db = dbops.Dbops("192.168.0.108", username, password, "test")
+
+xls = xlrd.open_workbook("test.xls")
+sheet = xls.sheet_by_index(0)
+
+for row in range(1, sheet.nrows):
+    id = sheet.cell_value(row, 0)
+    var1 = str(int(sheet.cell_value(row, 1)))
+    var2 = sheet.cell_value(row, 2)
+    sql = """insert into ops(str1, str2, str3) values ('%s', '%s', '%s');""" % (id, var1, var2)
+    db.insert_update_table(sql)
+
+db.db_close()
