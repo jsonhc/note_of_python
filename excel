@@ -26,3 +26,18 @@ for row in range(sheet.nrows):
 # newsheet.write(1, 2, 'wadeson')
 newbook.save("test1.xls")
 
+
+
+import xlrd
+
+xls = xlrd.open_workbook("test.xls")
+sheet = xls.sheet_by_index(0)
+
+L = []
+for row in range(1, sheet.nrows):
+    ip = sheet.cell_value(row, 0)
+    appid = sheet.cell_value(row, 1)
+    L.append((ip, appid))
+
+
+appids = list(set([appid for ip, appid in L]))  # list(set())  进行去重
