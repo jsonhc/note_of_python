@@ -1,0 +1,28 @@
+# pip3 install xlwt
+# pip3 install xlrd
+import xlwt         # 创建xls文件
+import xlrd         # 读取xls文件
+
+# 打开test.xls得到sheetname
+xls = xlrd.open_workbook("test.xls")
+sheet = xls.sheet_by_index(0)     # 0表示第一个sheet页
+# sheet = xls.sheet_by_name("test")  使用sheet名称获取sheet内容
+# print(sheet.nrows)     # 打印行数
+# print(sheet.ncols)     # 打印列数
+
+newbook = xlwt.Workbook()
+newsheet = newbook.add_sheet("test")
+
+# 读取sheet中所有内容,并写进一个新的sheet页面
+for row in range(sheet.nrows):
+    for col in range(sheet.ncols):
+        newsheet.write(row, col, sheet.cell_value(row, col))
+
+# newsheet.write(0, 0, "ip")   # newsheet.write(row, col, value)  对应行row,列col,值
+# newsheet.write(0, 1, "appid")
+# newsheet.write(0, 2, "dev")
+# newsheet.write(1, 0, '29.0.150.138')
+# newsheet.write(1, 1, '20028')
+# newsheet.write(1, 2, 'wadeson')
+newbook.save("test1.xls")
+
