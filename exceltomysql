@@ -14,3 +14,37 @@ for row in range(1, sheet.nrows):
     db.insert_update_table(sql)
 
 db.db_close()
+
+
+# 使用pandas和sqlalchemy模块将excel整个写入到mysql,批量将目录下面的excel写入到mysql
+# pip3 install sqlalchemy
+# pip3 install pandas
+import pandas as pd
+import os
+from sqlalchemy import create_engine
+import pymysql
+
+base_dir = os.path.dirname(os.path.abspath(__file__))    # /home/wadeson/python_projects/data
+xls_dir = os.path.join(base_dir, "xls")     # /home/wadeson/python_projects/data/xls
+L = os.listdir(xls_dir)
+
+for xls in L:
+    table_name = xls.split('.')[0]       # 将excel名作为表名
+    xls_file = os.path.join(xls_dir, xls)
+    df = pd.DataFrame(pd.read_excel(xls_file))
+    engine = create_engine('mysql+pymysql://root:redhat@192.168.0.108:3306/test',encoding='utf8')
+    df.to_sql(table_name, con=engine, if_exists='replace', index=False)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| ops            |
+| test           |
+| test1          |
++----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from test;
+5 rows in set (0.00 sec)
+mysql> desc test;
