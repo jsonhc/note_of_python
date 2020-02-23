@@ -17,6 +17,9 @@ db.db_close()
 
 
 # 使用pandas和sqlalchemy模块将excel整个写入到mysql,批量将目录下面的excel写入到mysql
+"""
+pandas批量将excel数据写入到mysql中
+"""
 # pip3 install sqlalchemy
 # pip3 install pandas
 import pandas as pd
@@ -31,7 +34,7 @@ L = os.listdir(xls_dir)
 for xls in L:
     table_name = xls.split('.')[0]       # 将excel名作为表名
     xls_file = os.path.join(xls_dir, xls)
-    df = pd.DataFrame(pd.read_excel(xls_file))
+    df = pd.DataFrame(pd.read_excel(xls_file))    # 将excel数据转化为DataFrame类型
     engine = create_engine('mysql+pymysql://root:redhat@192.168.0.108:3306/test',encoding='utf8')
     df.to_sql(table_name, con=engine, if_exists='replace', index=False)
 
@@ -58,3 +61,15 @@ if_exists ： {'fail'，'replace'，'append'}，默认'fail'。代表如果name
 if_exists ='fail'：若表存在，则报错；
 if_exists ='replace'：若表存在，则删除表中数据重新导入；
 if_exists ='append'：若表存在，则保留表中数据，并将新数据插入；
+
+
+"""
+pandas对mysql的查询追加到excel
+"""
+engine = create_engine('mysql+pymysql://root:redhat@192.168.0.108:3306/test',encoding='utf8')
+sql = """select * from test;"""
+data = pd.read_sql_query(sql, engine)
+print(data)
+
+df = pd.DataFrame.from_records(data)  # 将读取的数据格式化成DataFrame类型
+df.to_excel(os.path.join(xls_dir, "pandas_mysql_to_excel.xls"), index=False)
