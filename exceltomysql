@@ -48,3 +48,13 @@ mysql> show tables;
 mysql> select * from test;
 5 rows in set (0.00 sec)
 mysql> desc test;
+
+#开始写入
+data.to_sql(name = tables_name,con = engine,if_exists = 'append',index = False,index_label = False)
+name：表名；
+
+if_exists ： {'fail'，'replace'，'append'}，默认'fail'。代表如果name表已存在，则如何操作。
+
+if_exists ='fail'：若表存在，则报错；
+if_exists ='replace'：若表存在，则删除表中数据重新导入；
+if_exists ='append'：若表存在，则保留表中数据，并将新数据插入；
