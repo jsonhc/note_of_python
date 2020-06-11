@@ -1,0 +1,64 @@
+# socket进行上传文件
+
+传输文件server.py
+import json
+import socket
+import struct
+
+sk = socket.socket()
+sk.bind(('127.0.0.1',9999))
+
+sk.listen()
+
+conn,addr = sk.accept()
+
+# struct.unpack('i',msg_len)[0]解决粘包问题
+# 将收到的bytes转换为字符串
+msg_len = conn.recv(4)
+dic_len = struct.unpack('i',msg_len)[0]
+msg = conn.recv(dic_len).decode('utf-8')
+# 将字符串转换为字典
+msg = json.loads(msg)
+
+# 循环传输大文件
+with open(msg['filename'],'wb') as f:
+    while msg['filesize'] > 0:
+        content = conn.recv(1024)
+        msg['filesize'] -= len(content)
+        f.write(content)
+
+conn.close()
+sk.close()
+
+传输文件client.py
+import json
+import os
+import socket
+import struct
+
+sk = socket.socket()
+sk.connect(('127.0.0.1',9999))
+
+abs_path = r"/home/wadeson/django/login/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css"
+filename = os.path.basename(abs_path)
+filesize = os.path.getsize(abs_path)
+
+dic = {'filename': filename, 'filesize': filesize}
+# 将字典转换为字符串,字符串转换为bytes
+str_dic = json.dumps(dic)
+b_dic = str_dic.encode('utf-8')
+
+# 计算出bytes数据的字节大小
+msg_len = struct.pack('i',len(b_dic))
+
+# 发送字节，发送bytes数据
+sk.send(msg_len)
+sk.send(b_dic)
+
+with open(abs_path, 'rb') as f:
+    while filesize > 0:
+        content = f.read(1024)
+        filesize -= 1024
+        sk.send(content)
+
+sk.close()
