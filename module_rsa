@@ -1,0 +1,40 @@
+# 使用rsa进行加密解密
+
+# pip install rsa
+
+import rsa
+
+# 创建公钥私钥
+# def create_keys():
+#     (pubkey,privkey) = rsa.newkeys(1024)
+#     pub = pubkey.save_pkcs1()
+#     with open('public.pem','wb+') as f:
+#         f.write(pub)
+#
+#     pri = privkey.save_pkcs1()
+#     with open('private.pem','wb+') as f:
+#         f.write(pri)
+#
+# create_keys()
+
+# 使用公钥加密
+def RsaEncrypt():
+    with open('public.pem','rb') as f:
+        pub = f.read()
+    pubkey = rsa.PublicKey.load_pkcs1(pub)
+    content = "redhat".encode('utf8')
+    # 进行公钥加密
+    crypt_content = rsa.encrypt(content,pubkey)
+    return crypt_content
+    
+# 使用私钥解密
+def RsaDecrypt(crypt_content):
+    with open('private.pem','rb') as f:
+        pri = f.read()
+    prikey = rsa.PrivateKey.load_pkcs1(pri)
+    content = rsa.decrypt(crypt_content,prikey)
+    return content
+
+
+d = b'R=?O-4\x80\xdf\xc9\x1dD\x92\xda\xcerMO\xf9\xf6+a\x9b\xdbU\x11c\xca\xf5\x12D\xd5\xd5\xda2<\xce\xa2]\xb5H\\{G\x1d\xa2\xdc\xd7\x04\x10[\x9e\xfaw\xf2S&\xb0\xec\x0b}jKU_g\xfe\xbd\xfe\xa7zy\x10\xe0\x19\xc5r\xa1\xd2D\xeaBy9\x1c\xcaU\x95\x1d>\xa4\r\xd3F\x15\x08\x9a\x11\xd4\xd7=\xe6\x07\xf5xL\x86m}r2\x0ey3\xe7\x862J\xca\xfbAc\xcf\x90\x9c\xd4 D\xa9'
+print(RsaDecrypt(d).decode('utf8'))
