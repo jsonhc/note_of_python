@@ -1,0 +1,16 @@
+基本语法是通过 {} 和 : 来代替以前的 %
+
+print("format {}".format("hello"))     # format hello
+# 根据位置进行指定
+print("{0},{1}".format("hello","world")) # hello,world
+
+# 根据key进行定义
+print("{name},{name1}".format(name="hello",name1="world"))
+
+# 使用列表,将列表name赋予
+name = ["hello","world"]
+print("{name[0]}".format(name=name))   # 列表的0元素就是hello
+
+# 使用字典
+names = {'name':'tom','name1':'jack'}
+print("{names[name]}".format(names=names)) # tom
